@@ -1,59 +1,74 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fresh Mango | YHA Shop</title>
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-  <header class="topbar">
-    <nav class="container nav">
-      <a class="brand" href="{% url 'home' %}">YHA Shop</a>
-      <ul class="nav-links">
-        <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-        <li class="dropdown">
-          <span class="dropdown-label">Categories</span>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'products' %}">Fruits</a></li>
-            <li><a href="{% url 'products' %}">Electronics</a></li>
-            <li><a href="{% url 'products' %}">Food</a></li>
-          </ul>
-        </li>
-        <li><a class="nav-link" href="{% url 'products' %}">Products</a></li>
-        <li><a class="nav-link" href="{% url 'about' %}">About</a></li>
-      </ul>
-      <form class="search">
-        <input class="input" type="search" placeholder="Search">
-        <button class="btn btn-orange" type="submit">Search</button>
-      </form>
-    </nav>
-  </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fresh Mango | YHA Shop</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="container nav">
+        <a class="brand" href="{% url 'home' %}">YHA Shop</a>
+        <ul class="nav-links">
+          <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li class="dropdown">
+            <span class="dropdown-label">Categories</span>
+            <ul class="dropdown-menu">
+              {% for category in categories %}
+              <li>
+                <a href="{% url 'products' %}?category={{ category.id }}"
+                  >{{ category.name }}</a
+                >
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li><a class="nav-link" href="{% url 'products' %}">Products</a></li>
+          <li><a class="nav-link" href="{% url 'about' %}">About</a></li>
+        </ul>
+        <form class="search">
+          <input class="input" type="search" placeholder="Search" />
+          <button class="btn btn-orange" type="submit">Search</button>
+        </form>
+      </nav>
+    </header>
 
-  <main class="container section">
-    <section class="detail">
-      <img class="detail-image" src="{% static 'products/mango.jpg' %}" alt="Fresh mango">
-      <div>
-        <h1>Fresh Mango</h1>
-        <p class="muted">Category: Fruits</p>
-        <p class="detail-price">$8.00</p>
-        <p>Sweet seasonal mangoes selected for freshness, color, and flavor. Perfect for snacks, juice, desserts, and everyday family meals.</p>
-        <p><strong>Stock:</strong> 48</p>
-        <p><strong>Status:</strong> Available</p>
-        <div class="actions">
-          <a class="btn btn-orange" href="{% url 'products' %}">Back to Products</a>
-          <button class="btn btn-orange" type="button">Add to Cart</button>
+    <main class="container section">
+      <section class="detail">
+        <img
+          class="detail-image"
+          src="{% static products.image.url %}"
+          alt="{{ products.name }}"
+        />
+        <div>
+          <h1>{{ products.name }}</h1>
+          <p class="muted">Category: {{ products.category.name }}</p>
+          <p class="detail-price">${{ products.price|floatformat:2 }}</p>
+          <p>{{ products.description }}</p>
+          <p><strong>Stock:</strong> 10</p>
+          <p>
+            <strong>Status: {{ products.is_active|yesno:"Active,Inactive" }}</strong>
+          </p>
+          <div class="actions">
+            <a class="btn btn-orange" href="{% url 'products' %}"
+              >Back to Products</a
+            >
+            <button class="btn btn-orange" type="button">Add to Cart</button>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <footer class="footer">
-    <div class="container">
-      <strong>YHA Shop</strong>
-      <small>&copy; 2024 YHA Shop. Crafted for a brighter shopping experience.</small>
-    </div>
-  </footer>
-</body>
+    <footer class="footer">
+      <div class="container">
+        <strong>YHA Shop</strong>
+        <small
+          >&copy; 2024 YHA Shop. Crafted for a brighter shopping
+          experience.</small
+        >
+      </div>
+    </footer>
+  </body>
 </html>

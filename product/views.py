@@ -1,25 +1,77 @@
 from django.shortcuts import render , redirect , get_object_or_404
 from django.contrib import messages
-from .models import Category
+from .models import Category, Product
 
 # Create your views here.
 def home(request):
-    return render(request, "home/home.html")
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    return render(request, "home/home.html", {"products": products, "categories": categories})
 
 def about(request):
-    return render(request, "home/about.html")
+    categories = Category.objects.all()
+    return render(request, "home/about.html"  , {"categories": categories})
 
-def product_page(request):
-    return render(request, "home/product.html")
+def product_page(request , product_id):
+    categories = Category.objects.all()
+    products = get_object_or_404(Product, id=product_id)
+    return render(request, "home/product.html", {"categories": categories , "products": products})
 
 def products(request):
-    return render(request, "home/products.html")
+    categories = Category.objects.all()
+    return render(request, "home/products.html" , {"categories": categories})
 
 def admin_products(request):
-    return render(request, "product/admin-products.html")
+    products = Product.objects.all().order_by("id")
+    return render(request, "product/admin-products.html", {"products": products})
 
 def admin_product_form(request):
-    return render(request, "product/admin-product-form.html")
+    categories = Category.objects.all()
+    if request.method == "POST":
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        category_id = request.POST.get("category")
+        image = request.FILES.get("image")
+        is_active = request.POST.get("is_active") == "on"
+        if name and description and price and category_id and image:
+            category = get_object_or_404(Category, id=category_id)
+            Product.objects.create(
+                name=name,
+                description=description,
+                price=price,
+                category=category,
+                image=image,
+                is_active=is_active
+            )
+            messages.success(request, "Product created successfully!")
+            return redirect("admin_products")
+    return render(request, "product/admin-product-form.html" , {"categories": categories})
+
+
+def admin_product_edit(request, id):
+    product = get_object_or_404(Product, id=id)
+    categories = Category.objects.all()
+    if request.method == "POST":
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        category_id = request.POST.get("category")
+        image = request.FILES.get("image")
+        is_active = request.POST.get("is_active") == "on"
+        if name and description and price and category_id:
+            category = get_object_or_404(Category, id=category_id)
+            product.name = name
+            product.description = description
+            product.price = price
+            product.category = category
+            if image:
+                product.image = image
+            product.is_active = is_active
+            product.save()
+            messages.success(request, "Product updated successfully!")
+            return redirect("admin_products")
+    return render(request, "product/admin-product-edit.html", {"product": product, "categories": categories})
 
 def admin_categories(request):
     categories = Category.objects.all().order_by("id")

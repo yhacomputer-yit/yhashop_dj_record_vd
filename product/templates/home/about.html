@@ -15,10 +15,10 @@
         <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
         <li class="dropdown">
           <span class="dropdown-label">Categories</span>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'products' %}">Fruits</a></li>
-            <li><a href="{% url 'products' %}">Electronics</a></li>
-            <li><a href="{% url 'products' %}">Food</a></li>
+  <ul class="dropdown-menu">
+            {% for category in categories %}
+              <li><a href="{% url 'products' %}?category={{ category.id }}">{{ category.name }}</a></li>
+            {% endfor %}
           </ul>
         </li>
         <li><a class="nav-link" href="{% url 'products' %}">Products</a></li>

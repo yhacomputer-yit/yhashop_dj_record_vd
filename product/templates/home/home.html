@@ -16,9 +16,9 @@
         <li class="dropdown">
           <span class="dropdown-label">Categories</span>
           <ul class="dropdown-menu">
-            <li><a href="{% url 'products' %}">Fruits</a></li>
-            <li><a href="{% url 'products' %}">Electronics</a></li>
-            <li><a href="{% url 'products' %}">Food</a></li>
+            {% for category in categories %}
+              <li><a href="{% url 'products' %}?category={{ category.id }}">{{ category.name }}</a></li>
+            {% endfor %}
           </ul>
         </li>
         <li><a class="nav-link" href="{% url 'products' %}">Products</a></li>
@@ -40,66 +40,21 @@
 
     <section class="container section">
       <div class="grid">
+
+        {% for product in products %}
         <article class="card">
-          <img class="card-img" src="{% static 'products/mango.jpg' %}" alt="Fresh mango">
+          <img class="card-img" src="{% static product.image.url %}" alt="{{ product.name }}">
           <div class="card-body">
-            <h2 class="card-title">Fresh Mango</h2>
-            <p class="muted">Sweet seasonal mangoes selected for freshness and flavor.</p>
-            <p class="price">Price: $8.00</p>
-            <p class="muted">Category: Fruits</p>
-            <a class="btn btn-orange" href="{% url 'product' %}">More Detail</a>
+            <h2 class="card-title">{{ product.name }}</h2>
+            <p class="muted">{{ product.description }}</p>
+            <p class="price">Price: ${{ product.price|floatformat:2 }}</p>
+            <p class="muted">Category: {{ product.category.name }}</p>
+            <a class="btn btn-orange" href="{% url 'product' product.id %}">More Detail</a>
           </div>
         </article>
-        <article class="card">
-          <img class="card-img" src="{% static 'products/red-delicions-with-shadow-658x677.webp' %}" alt="Red apple">
-          <div class="card-body">
-            <h2 class="card-title">Red Apple</h2>
-            <p class="muted">Crisp apples for snacks, desserts, and everyday meals.</p>
-            <p class="price">Price: $5.00</p>
-            <p class="muted">Category: Fruits</p>
-            <a class="btn btn-orange" href="{% url 'product' %}">More Detail</a>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card-img" src="{% static 'products/612dh2Q94YL._AC_SY300_SX300_QL70_ML2_.jpg' %}" alt="Product item">
-          <div class="card-body">
-            <h2 class="card-title">Daily Essential</h2>
-            <p class="muted">A reliable product for simple daily shopping needs.</p>
-            <p class="price">Price: $15.00</p>
-            <p class="muted">Category: Food</p>
-            <a class="btn btn-orange" href="{% url 'product' %}">More Detail</a>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card-img" src="{% static 'products/612dh2Q94YL._AC_SY300_SX300_QL70_ML2_.jpg' %}" alt="Premium red apple">
-          <div class="card-body">
-            <h2 class="card-title">Premium Apple</h2>
-            <p class="muted">Bright, juicy apples packed for fresh daily shopping.</p>
-            <p class="price">Price: $6.00</p>
-            <p class="muted">Category: Fruits</p>
-            <a class="btn btn-orange" href="{% url 'product' %}">More Detail</a>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card-img" src="{% static 'products/mango.jpg' %}" alt="Mango box">
-          <div class="card-body">
-            <h2 class="card-title">Mango Box</h2>
-            <p class="muted">A family-size fruit box for snacks, juice, and desserts.</p>
-            <p class="price">Price: $18.00</p>
-            <p class="muted">Category: Fruits</p>
-            <a class="btn btn-orange" href="{% url 'product' %}">More Detail</a>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card-img" src="{% static 'products/612dh2Q94YL._AC_SY300_SX300_QL70_ML2_.jpg' %}" alt="Kitchen product">
-          <div class="card-body">
-            <h2 class="card-title">Kitchen Pack</h2>
-            <p class="muted">Useful essentials prepared for quick household restocking.</p>
-            <p class="price">Price: $22.00</p>
-            <p class="muted">Category: Food</p>
-            <a class="btn btn-orange" href="{% url 'product' %}">More Detail</a>
-          </div>
-        </article>
+      {% empty %}
+        <p>No products available at the moment.</p> 
+       {% endfor %}
       </div>
 
       <div class="section-action">

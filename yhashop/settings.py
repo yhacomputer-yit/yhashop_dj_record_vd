@@ -126,3 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+#product image to show in admin product page
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
