@@ -1,0 +1,106 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Balance</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="admin-body">
+  <header class="admin-nav">
+    <div class="container admin-nav-inner">
+      <a class="brand" href="{% url 'admin_products' %}">YHA Shop Admin</a>
+      <nav class="admin-links">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-layout">
+    <aside class="sidebar">
+      <a class="side-link" href="{% url 'home' %}">Dashboard</a>
+      <a class="side-link" href="{% url 'admin_categories' %}">Category Management</a>
+      <a class="side-link" href="{% url 'admin_products' %}">Product Management</a>
+      <a class="side-link active" href="{% url 'admin_balance' %}">Balance Management</a>
+      <a class="side-link danger" href="#">Logout</a>
+    </aside>
+
+    <section class="admin-main">
+      <h1>Balance Management</h1>
+      <div class="panel">
+        <div class="panel-head">Add New Balance</div>
+        <div class="panel-body">
+          <form class="form-grid">
+            <div>
+              <label class="form-label" for="balance-product">Product</label>
+              <select class="select" id="balance-product">
+                <option>Fresh Mango</option>
+                <option>Red Apple</option>
+                <option>Daily Essential</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" for="income">Income Qty</label>
+              <input class="input" id="income" type="number" min="0" placeholder="Enter income quantity">
+            </div>
+            <div>
+              <label class="form-label" for="sale">Sale Qty</label>
+              <input class="input" id="sale" type="number" min="0" placeholder="Enter sale quantity">
+            </div>
+            <div class="field-full">
+              <button class="btn btn-blue" type="submit">Add Balance</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel panel-spaced">
+        <div class="panel-head">Balance Records</div>
+        <div class="panel-body table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Income Qty</th>
+                <th>Sale Qty</th>
+                <th>Balance</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Fresh Mango</td>
+                <td>60</td>
+                <td>12</td>
+                <td>48</td>
+                <td>2026-05-18 12:01</td>
+                <td>
+                  <a class="btn btn-outline btn-sm" href="#">Edit</a>
+                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Red Apple</td>
+                <td>90</td>
+                <td>31</td>
+                <td>59</td>
+                <td>2026-05-18 12:10</td>
+                <td>
+                  <a class="btn btn-outline btn-sm" href="#">Edit</a>
+                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

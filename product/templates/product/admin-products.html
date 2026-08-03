@@ -1,0 +1,79 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Products</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="admin-body">
+  <header class="admin-nav">
+    <div class="container admin-nav-inner">
+      <a class="brand" href="{% url 'admin_products' %}">YHA Shop Admin</a>
+      <nav class="admin-links">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-layout">
+    <aside class="sidebar">
+      <a class="side-link" href="{% url 'home' %}">Dashboard</a>
+      <a class="side-link" href="{% url 'admin_categories' %}">Category Management</a>
+      <a class="side-link active" href="{% url 'admin_products' %}">Product Management</a>
+      <a class="side-link" href="{% url 'admin_balance' %}">Balance Management</a>
+      <a class="side-link danger" href="#">Logout</a>
+    </aside>
+
+    <section class="admin-main">
+      <h1>Product Management</h1>
+      <div class="panel">
+        <div class="panel-head">
+          <span>Products List</span>
+          <a class="btn btn-blue btn-sm" href="{% url 'admin_product_form' %}">Add New Product</a>
+        </div>
+        <div class="panel-body table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Image</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Fresh Mango</td>
+                <td>$8.00</td>
+                <td>Fruits</td>
+                <td><img class="thumb" src="{% static 'products/mango.jpg' %}" alt="Fresh mango"></td>
+                <td>
+                  <a class="btn btn-outline btn-sm" href="{% url 'admin_product_form' %}">Edit</a>
+                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Red Apple</td>
+                <td>$5.00</td>
+                <td>Fruits</td>
+                <td><img class="thumb" src="{% static 'products/red-delicions-with-shadow-658x677.webp' %}" alt="Red apple"></td>
+                <td>
+                  <a class="btn btn-outline btn-sm" href="{% url 'admin_product_form' %}">Edit</a>
+                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

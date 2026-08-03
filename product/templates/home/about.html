@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | YHA Shop</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="container nav">
+      <a class="brand" href="{% url 'home' %}">YHA Shop</a>
+      <ul class="nav-links">
+        <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+        <li class="dropdown">
+          <span class="dropdown-label">Categories</span>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'products' %}">Fruits</a></li>
+            <li><a href="{% url 'products' %}">Electronics</a></li>
+            <li><a href="{% url 'products' %}">Food</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-link" href="{% url 'products' %}">Products</a></li>
+        <li><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+      </ul>
+      <form class="search">
+        <input class="input" type="search" placeholder="Search">
+        <button class="btn btn-orange" type="submit">Search</button>
+      </form>
+    </nav>
+  </header>
+
+  <main class="container section">
+    <article class="about-copy">
+      <h1>About YHA Shop</h1>
+      <p>Welcome to YHA Shop, your one-stop destination for all your shopping needs. We are committed to providing a seamless and enjoyable shopping experience with a wide range of products across useful categories.</p>
+      <p>At YHA Shop, we believe in quality, affordability, and customer satisfaction. Our team curates products that fit everyday lifestyles and preferences.</p>
+      <p>Our mission is to make online shopping easy and accessible for everyone with friendly service, simple product discovery, and a clean shopping experience.</p>
+      <p>Thank you for choosing YHA Shop. We look forward to serving you.</p>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <strong>YHA Shop</strong>
+      <small>&copy; 2024 YHA Shop. Crafted for a brighter shopping experience.</small>
+    </div>
+  </footer>
+</body>
+</html>

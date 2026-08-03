@@ -1,0 +1,91 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products | YHA Shop</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="container nav">
+      <a class="brand" href="{% url 'home' %}">YHA Shop</a>
+      <ul class="nav-links">
+        <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+        <li class="dropdown">
+          <span class="dropdown-label">Categories</span>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'products' %}">Fruits</a></li>
+            <li><a href="{% url 'products' %}">Electronics</a></li>
+            <li><a href="{% url 'products' %}">Food</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-link active" href="{% url 'products' %}">Products</a></li>
+        <li><a class="nav-link" href="{% url 'about' %}">About</a></li>
+      </ul>
+      <form class="search">
+        <input class="input" type="search" placeholder="Search">
+        <button class="btn btn-orange" type="submit">Search</button>
+      </form>
+    </nav>
+  </header>
+
+  <div class="breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb-list">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li>/</li>
+        <li>All Products</li>
+      </ol>
+    </div>
+  </div>
+
+  <main class="container section">
+    <header class="page-title">
+      <h1>All Products</h1>
+      <p>Browse our available products.</p>
+    </header>
+
+    <div class="grid">
+      <article class="card">
+        <img class="card-img" src="{% static 'products/mango.jpg' %}" alt="Fresh mango">
+        <div class="card-body">
+          <h2 class="card-title">Fresh Mango</h2>
+          <p class="muted">Sweet seasonal mangoes selected for freshness and flavor.</p>
+          <p class="price">$8.00</p>
+          <p class="muted">Category: Fruits</p>
+          <a class="btn btn-orange" href="{% url 'product' %}">View Details</a>
+        </div>
+      </article>
+      <article class="card">
+        <img class="card-img" src="{% static 'products/red-delicions-with-shadow-658x677.webp' %}" alt="Red apple">
+        <div class="card-body">
+          <h2 class="card-title">Red Apple</h2>
+          <p class="muted">Crisp apples for snacks, desserts, and everyday meals.</p>
+          <p class="price">$5.00</p>
+          <p class="muted">Category: Fruits</p>
+          <a class="btn btn-orange" href="{% url 'product' %}">View Details</a>
+        </div>
+      </article>
+      <article class="card">
+        <img class="card-img" src="{% static 'products/612dh2Q94YL._AC_SY300_SX300_QL70_ML2_.jpg' %}" alt="Product item">
+        <div class="card-body">
+          <h2 class="card-title">Daily Essential</h2>
+          <p class="muted">A reliable product for simple daily shopping needs.</p>
+          <p class="price">$15.00</p>
+          <p class="muted">Category: Food</p>
+          <a class="btn btn-orange" href="{% url 'product' %}">View Details</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <strong>YHA Shop</strong>
+      <small>&copy; 2024 YHA Shop. Crafted for a brighter shopping experience.</small>
+    </div>
+  </footer>
+</body>
+</html>
