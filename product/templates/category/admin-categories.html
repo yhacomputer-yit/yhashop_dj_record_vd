@@ -46,26 +46,23 @@
               </tr>
             </thead>
             <tbody>
+
+               {% for category in categories %} 
               <tr>
-                <td>1</td>
-                <td>Fruits</td>
-                <td>2026-05-17 14:10</td>
-                <td>2026-05-18 09:20</td>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.created_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ category.updated_at|date:"Y-m-d H:i" }}</td>
                 <td>
                   <a class="btn btn-outline btn-sm" href="{% url 'admin_category_form' %}">Edit</a>
-                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
+                  <a class="btn btn-outline-danger btn-sm" href="{% url 'admin-category-delete' category.id %}">Delete</a>
                 </td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>Food</td>
-                <td>2026-05-17 14:16</td>
-                <td>2026-05-18 09:28</td>
-                <td>
-                  <a class="btn btn-outline btn-sm" href="{% url 'admin_category_form' %}">Edit</a>
-                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
-                </td>
-              </tr>
+              {% empty %} 
+              <tr> 
+                <td colspan="5" class="text-center">No categories found</td> 
+              </tr> 
+              {% endfor %} 
             </tbody>
           </table>
         </div>

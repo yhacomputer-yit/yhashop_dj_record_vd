@@ -33,10 +33,10 @@
         <div class="panel-head">Add New Category</div>
         <div class="panel-body">
           <form class="form-grid" method="post">
-
+             {% csrf_token %} 
             <div class="field-full">
               <label class="form-label" for="category-name">Category Name</label>
-              <input class="input" id="category-name" type="text" placeholder="Category Name" value="Fruits" name="name">
+              <input class="input" id="category-name" type="text" placeholder="Category Name" value="" name="name">
             </div>
             <div class="field-full actions">
               <a class="btn btn-muted" href="{% url 'admin_categories' %}">Cancel</a>
