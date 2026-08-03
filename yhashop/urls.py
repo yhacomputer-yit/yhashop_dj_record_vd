@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin-product-form/', views.admin_product_form, name='admin_product_form'),
     path('admin-categories/', views.admin_categories, name='admin_categories'),
     path('admin-category-form/', views.admin_category_form, name='admin_category_form'),
+    path('admin-category/<int:id>/edit/', views.category_edit, name='admin-category-edit'),
     path('admin-category/<int:id>/delete/', views.category_delete, name='admin-category-delete'),
     path('admin-balance/', views.admin_balance, name='admin_balance'),
 ]

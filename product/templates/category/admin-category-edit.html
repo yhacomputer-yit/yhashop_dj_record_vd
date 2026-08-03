@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Edit Category</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="admin-body">
+  <header class="admin-nav">
+    <div class="container admin-nav-inner">
+      <a class="brand" href="{% url 'admin_products' %}">YHA Shop Admin</a>
+      <nav class="admin-links">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-layout">
+    <aside class="sidebar">
+      <a class="side-link" href="{% url 'home' %}">Dashboard</a>
+      <a class="side-link active" href="{% url 'admin_categories' %}">Category Management</a>
+      <a class="side-link" href="{% url 'admin_products' %}">Product Management</a>
+      <a class="side-link" href="{% url 'admin_balance' %}">Balance Management</a>
+      <a class="side-link danger" href="#">Logout</a>
+    </aside>
+
+    <section class="admin-main">
+      <h1>Edit Category</h1>
+      <div class="panel">
+        <div class="panel-head">Edit Category</div>
+        <div class="panel-body">
+          <form class="form-grid" method="post">
+            {% csrf_token %}
+            <div class="field-full">
+              <label class="form-label" for="category-name">Category Name</label>
+              <input class="input" id="category-name" type="text" placeholder="Category Name" value="{{ category.name }}" name="name">
+            </div>
+            <div class="field-full actions">
+              <a class="btn btn-muted" href="{% url 'admin_categories' %}">Cancel</a>
+              <button class="btn btn-blue" type="submit">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

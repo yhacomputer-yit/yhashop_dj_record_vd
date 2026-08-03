@@ -43,5 +43,16 @@ def category_delete(request, id):
     return render(request, "category/admin-category-delete.html", {"categories": 
 category})
 
+def category_edit(request, id):
+    category = get_object_or_404(Category, id=id)
+    if request.method == "POST":
+        name = request.POST.get("name")
+        if name:
+            category.name = name
+            category.save()
+            messages.success(request, "Category updated successfully!")
+            return redirect("admin_categories")
+    return render(request, "category/admin-category-edit.html", {"category": category})
+
 def admin_balance(request):
     return render(request, "balance/admin-balance.html")

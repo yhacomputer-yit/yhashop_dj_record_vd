@@ -54,7 +54,7 @@
                 <td>{{ category.created_at|date:"Y-m-d H:i" }}</td>
                 <td>{{ category.updated_at|date:"Y-m-d H:i" }}</td>
                 <td>
-                  <a class="btn btn-outline btn-sm" href="{% url 'admin_category_form' %}">Edit</a>
+                  <a class="btn btn-outline btn-sm" href="{% url 'admin-category-edit' category.id %}">Edit</a>
                   <a class="btn btn-outline-danger btn-sm" href="{% url 'admin-category-delete' category.id %}">Delete</a>
                 </td>
               </tr>
