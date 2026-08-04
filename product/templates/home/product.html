@@ -39,7 +39,7 @@
       <section class="detail">
         <img
           class="detail-image"
-          src="{% static products.image.url %}"
+          src="{{ products.image.url }}"
           alt="{{ products.name }}"
         />
         <div>
@@ -47,7 +47,7 @@
           <p class="muted">Category: {{ products.category.name }}</p>
           <p class="detail-price">${{ products.price|floatformat:2 }}</p>
           <p>{{ products.description }}</p>
-          <p><strong>Stock:</strong> 10</p>
+          <p><strong>Stock:</strong> {{ current_balance.balance }}</p>
           <p>
             <strong>Status: {{ products.is_active|yesno:"Active,Inactive" }}</strong>
           </p>

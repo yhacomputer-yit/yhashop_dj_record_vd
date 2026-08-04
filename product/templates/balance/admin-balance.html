@@ -32,22 +32,23 @@
       <div class="panel">
         <div class="panel-head">Add New Balance</div>
         <div class="panel-body">
-          <form class="form-grid">
+          <form class="form-grid" method="post">
+            {% csrf_token %}
             <div>
               <label class="form-label" for="balance-product">Product</label>
-              <select class="select" id="balance-product">
-                <option>Fresh Mango</option>
-                <option>Red Apple</option>
-                <option>Daily Essential</option>
+              <select class="select" id="balance-product" name="product">
+                {% for product in products %}
+                  <option value="{{ product.id }}">{{ product.name }}</option>
+                {% endfor %}
               </select>
             </div>
             <div>
               <label class="form-label" for="income">Income Qty</label>
-              <input class="input" id="income" type="number" min="0" placeholder="Enter income quantity">
+              <input class="input" id="income" type="number" min="0" placeholder="Enter income quantity" name="income">
             </div>
             <div>
               <label class="form-label" for="sale">Sale Qty</label>
-              <input class="input" id="sale" type="number" min="0" placeholder="Enter sale quantity">
+              <input class="input" id="sale" type="number" min="0" placeholder="Enter sale quantity" name="sale">
             </div>
             <div class="field-full">
               <button class="btn btn-blue" type="submit">Add Balance</button>
@@ -72,30 +73,24 @@
               </tr>
             </thead>
             <tbody>
+              {% for record in balance_records %}
               <tr>
-                <td>1</td>
-                <td>Fresh Mango</td>
-                <td>60</td>
-                <td>12</td>
-                <td>48</td>
-                <td>2026-05-18 12:01</td>
+                <td>{{ record.id }}</td>
+                <td>{{ record.product.name }}</td>
+                <td>{{ record.income_qty }}</td>
+                <td>{{ record.sales_qty }}</td>
+                <td>{{ record.balance }}</td>
+                <td>{{ record.date }}</td>
                 <td>
-                  <a class="btn btn-outline btn-sm" href="#">Edit</a>
-                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
+                  <a class="btn btn-outline btn-sm" href="{% url 'admin_balance_edit' record.id %}">Edit</a>
+                  <a class="btn btn-outline-danger btn-sm" href="{% url 'admin_balance_delete' record.id %}">Delete</a>
                 </td>
               </tr>
+              {% empty %}
               <tr>
-                <td>2</td>
-                <td>Red Apple</td>
-                <td>90</td>
-                <td>31</td>
-                <td>59</td>
-                <td>2026-05-18 12:10</td>
-                <td>
-                  <a class="btn btn-outline btn-sm" href="#">Edit</a>
-                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
-                </td>
+                <td colspan="7" class="text-center">No balance records found.</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>

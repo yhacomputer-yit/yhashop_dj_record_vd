@@ -1,0 +1,63 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Edit Balance</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="admin-body">
+  <header class="admin-nav">
+    <div class="container admin-nav-inner">
+      <a class="brand" href="{% url 'admin_products' %}">YHA Shop Admin</a>
+      <nav class="admin-links">
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-layout">
+    <aside class="sidebar">
+      <a class="side-link" href="{% url 'home' %}">Dashboard</a>
+      <a class="side-link active" href="{% url 'admin_categories' %}">Category Management</a>
+      <a class="side-link" href="{% url 'admin_products' %}">Product Management</a>
+      <a class="side-link" href="{% url 'admin_balance' %}">Balance Management</a>
+      <a class="side-link danger" href="#">Logout</a>
+    </aside>
+
+    <section class="admin-main">
+      <h1>Edit Balance</h1>
+      <div class="panel">
+        <div class="panel-head">Edit Balance</div>
+        <div class="panel-body">
+          <form class="form-grid" method="post">
+            {% csrf_token %}
+            <div class="field-full">
+              <label class="form-label" for="product">Product</label>
+              <select class="input" id="product" name="product">
+                {% for product in products %}
+                  <option value="{{ product.id }}" {% if product.id == balance_record.product.id %}selected{% endif %}>{{ product.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="field-full">
+              <label class="form-label" for="income">Income Quantity</label>
+              <input class="input" id="income" type="number" placeholder="Income Quantity" value="{{ balance_record.income_qty }}" name="income">
+            </div>
+            <div class="field-full">
+              <label class="form-label" for="sale">Sales Quantity</label>
+              <input class="input" id="sale" type="number" placeholder="Sales Quantity" value="{{ balance_record.sales_qty }}" name="sale">
+            </div>
+            <div class="field-full actions">
+              <a class="btn btn-muted" href="{% url 'admin_balance' %}">Cancel</a>
+              <button class="btn btn-blue" type="submit">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

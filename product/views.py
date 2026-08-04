@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect , get_object_or_404
 from django.contrib import messages
-from .models import Category, Product
+from .models import Balance, Category, Product
 
 # Create your views here.
 def home(request):
@@ -15,11 +15,17 @@ def about(request):
 def product_page(request , product_id):
     categories = Category.objects.all()
     products = get_object_or_404(Product, id=product_id)
-    return render(request, "home/product.html", {"categories": categories , "products": products})
+    current_balance = Balance.objects.filter(product=products).order_by('-id').first()
+    return render(request, "home/product.html", {"categories": categories , "products": products, "current_balance": current_balance})
 
 def products(request):
     categories = Category.objects.all()
-    return render(request, "home/products.html" , {"categories": categories})
+    products = Product.objects.all()
+    category_id = request.GET.get("category")
+    if category_id:
+        products = products.filter(category_id=category_id)
+        
+    return render(request, "home/products.html" , {"categories": categories , "products": products})
 
 def admin_products(request):
     products = Product.objects.all().order_by("id")
@@ -73,6 +79,14 @@ def admin_product_edit(request, id):
             return redirect("admin_products")
     return render(request, "product/admin-product-edit.html", {"product": product, "categories": categories})
 
+def admin_product_delete(request, id):
+    product = get_object_or_404(Product, id=id)
+    if request.method == "POST":
+        product.delete()
+        messages.success(request, "Product deleted successfully!")
+        return redirect("admin_products")
+    return render(request, "product/admin-product-delete.html", {"product": product})
+
 def admin_categories(request):
     categories = Category.objects.all().order_by("id")
     return render(request, "category/admin-categories.html" , { "categories": categories,})
@@ -107,4 +121,71 @@ def category_edit(request, id):
     return render(request, "category/admin-category-edit.html", {"category": category})
 
 def admin_balance(request):
-    return render(request, "balance/admin-balance.html")
+    balance_records = Balance.objects.all().order_by("-id")
+    products = Product.objects.all().order_by("id")
+    if request.method == "POST":
+        product_id = request.POST.get("product")
+        income_qty = request.POST.get("income")
+        sales_qty = request.POST.get("sale")
+        
+        if product_id and income_qty is not None and sales_qty is not None:
+            product = get_object_or_404(Product, id=product_id)
+            income_qty = int(income_qty)
+            sales_qty = int(sales_qty)
+            
+            # Create a new Balance record
+            balance_record = Balance.objects.create(
+                product=product,
+                income_qty=income_qty,
+                sales_qty=sales_qty,
+                balance=0  # Initial balance will be recalculated
+            )
+            
+            # Recalculate the balance for the product
+            Balance.recalculate_balance(product)
+            
+            messages.success(request, "Balance record added successfully!")
+            return redirect("admin_balance")
+    return render(request, "balance/admin-balance.html" , {"products": products , "balance_records": balance_records})
+
+
+def admin_balance_delete(request, id):
+    balance_record = get_object_or_404(Balance, id=id)
+    if request.method == "POST":
+        product = balance_record.product
+        balance_record.delete()
+        
+        # Recalculate the balance for the product after deletion
+        Balance.recalculate_balance(product)
+        
+        messages.success(request, "Balance record deleted successfully!")
+        return redirect("admin_balance")
+    return render(request, "balance/admin-balance-delete.html", {"balance_record": balance_record})
+
+def admin_balance_edit(request, id):
+    balance_record = get_object_or_404(Balance, id=id)
+    products = Product.objects.all().order_by("id")
+    
+    if request.method == "POST":
+        product_id = request.POST.get("product")
+        income_qty = request.POST.get("income")
+        sales_qty = request.POST.get("sale")
+        
+        if product_id and income_qty is not None and sales_qty is not None:
+            product = get_object_or_404(Product, id=product_id)
+            income_qty = int(income_qty)
+            sales_qty = int(sales_qty)
+            
+            # Update the balance record
+            balance_record.product = product
+            balance_record.income_qty = income_qty
+            balance_record.sales_qty = sales_qty
+            balance_record.save()
+            
+            # Recalculate the balance for the product after update
+            Balance.recalculate_balance(product)
+            
+            messages.success(request, "Balance record updated successfully!")
+            return redirect("admin_balance")
+    
+    return render(request, "balance/admin-balance-edit.html", {"balance_record": balance_record, "products": products})

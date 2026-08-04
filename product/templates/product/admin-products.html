@@ -55,14 +55,14 @@
                 <td>{{ product.category.name }}</td>
                 <td>
                   {% if product.image %}
-                    <img src="static {{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                    <img style="width: 50px;" src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
                   {% else %}
                     No Image
                   {% endif %}
                 </td>
                 <td>
                   <a class="btn btn-outline btn-sm" href="{% url 'admin_product_edit' product.id %}">Edit</a>
-                  <a class="btn btn-outline-danger btn-sm" href="#">Delete</a>
+                  <a class="btn btn-outline-danger btn-sm" href="{% url 'admin-product-delete' product.id %}">Delete</a>
                 </td>
               </tr>
               {% empty %}

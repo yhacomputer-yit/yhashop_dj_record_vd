@@ -23,3 +23,24 @@ class Product(models.Model):
     def __str__(self): 
         return self.name
     
+    
+#balance model
+
+class Balance(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='balances')
+    income_qty = models.PositiveIntegerField(default=0)
+    sales_qty = models.PositiveIntegerField(default=0)
+    balance = models.PositiveIntegerField(default=0)
+    date = models.DateField(auto_now_add=True)
+    
+    @classmethod
+    def recalculate_balance(cls, product):
+        running_balance = 0
+        for balance_record in cls.objects.filter(product=product).order_by('id'):
+            running_balance += balance_record.income_qty - balance_record.sales_qty
+            balance_record.balance = running_balance
+            balance_record.save(update_fields=['balance'])
+        return running_balance
+    
+    def __str__(self):
+        return  f"{self.product.name} - {self.balance}"

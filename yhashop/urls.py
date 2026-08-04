@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from product import views
 
 urlpatterns = [
@@ -27,9 +29,12 @@ urlpatterns = [
     path('admin-product/<int:id>/edit/', views.admin_product_edit, name='admin_product_edit'),
     path('admin-products/', views.admin_products, name='admin_products'),
     path('admin-product-form/', views.admin_product_form, name='admin_product_form'),
+    path('admin-product/<int:id>/delete/', views.admin_product_delete, name='admin-product-delete'),
     path('admin-categories/', views.admin_categories, name='admin_categories'),
     path('admin-category-form/', views.admin_category_form, name='admin_category_form'),
     path('admin-category/<int:id>/edit/', views.category_edit, name='admin-category-edit'),
     path('admin-category/<int:id>/delete/', views.category_delete, name='admin-category-delete'),
     path('admin-balance/', views.admin_balance, name='admin_balance'),
-]
+    path('admin-balance/<int:id>/delete/', views.admin_balance_delete, name='admin_balance_delete'),
+    path('admin-balance/<int:id>/edit/', views.admin_balance_edit, name='admin_balance_edit'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -43,7 +43,7 @@
 
         {% for product in products %}
         <article class="card">
-          <img class="card-img" src="{% static product.image.url %}" alt="{{ product.name }}">
+          <img class="card-img" src="{{ product.image.url }}" alt="{{ product.name }}">
           <div class="card-body">
             <h2 class="card-title">{{ product.name }}</h2>
             <p class="muted">{{ product.description }}</p>
